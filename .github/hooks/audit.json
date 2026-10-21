@@ -3,7 +3,7 @@
     "PostToolUse": [
       {
         "type": "command",
-        "command": "powershell -NoProfile -ExecutionPolicy Bypass -File \"C:/Users/automatep/source/repos/Vault/.github/hooks/audit.ps1\""
+        "command": "powershell -NoProfile -ExecutionPolicy Bypass -Command \"& ([Environment]::GetFolderPath('UserProfile') + '/.copilot/hooks/audit.ps1')\""
       }
     ]
   }

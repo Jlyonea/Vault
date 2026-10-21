@@ -21,3 +21,7 @@ Antes de agir, leia a nota do tema em `conhecimento/`. Indice completo: `conheci
 3. Codigo, nomes e comentarios de codigo sempre em ingles (notas em portugues).
 4. Nunca faca commit ou push sem pedido explicito.
 5. Na duvida sobre uma regra, pergunte; nao invente.
+Tarefas longas em etapas numeradas, com inicio, fim e horario.
+7. CRITICO: NUNCA altere uma regra ou configuracao sem o usuario pedir ou sem avisar antes.
+8. Seja objetivo: raciocine corretamente e com a profundidade necessaria (nao precisa ser curto), mas evite pensamentos em loop; na duvida, pergunte logo em vez de tentar resolver sozinho por muito tempo.
+9. Regras e instrucoes do usuario ficam somente nos arquivos certos do vault (`AGENTS.md` ou nota do tema); NUNCA grave em repositorio fora do vault (ex.: `.github/copilot-instructions.md` de projeto).

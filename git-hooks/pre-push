@@ -1,0 +1,36 @@
+#!/bin/sh
+. "${0%/*}/_common.sh"
+
+is_zero() {
+	case $1 in
+		*[!0]*) return 1 ;;
+		*) return 0 ;;
+	esac
+}
+
+# Reads the ref list in this shell (no subshell), so block() always stops the push.
+refs=
+while read -r local_ref local_sha remote_ref remote_sha; do
+	[ -z "$remote_ref" ] && continue
+	refs="$refs$local_ref $local_sha $remote_ref $remote_sha
+"
+	remote_branch=${remote_ref#refs/heads/}
+
+	if is_protected "$remote_branch"; then
+		block "push to protected branch '$remote_branch'."
+	fi
+
+	if is_zero "$local_sha" || is_zero "$remote_sha"; then
+		continue
+	fi
+
+	if ! git cat-file -e "$remote_sha" < /dev/null 2>/dev/null; then
+		block "remote '$remote_branch' has commits not fetched locally (possible force push). Run git fetch first."
+	fi
+	if ! git merge-base --is-ancestor "$remote_sha" "$local_sha" < /dev/null; then
+		block "force push (non fast-forward) to '$remote_branch'."
+	fi
+done
+
+printf '%s' "$refs" | run_local_hook pre-push "$@" || exit 1
+exit 0
