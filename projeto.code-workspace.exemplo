@@ -1,0 +1,19 @@
+{
+  // Copie para <nome>.code-workspace (fora do git) e ajuste o caminho do projeto.
+  "folders": [
+	{ "name": "projeto", "path": "C:/Users/automatep/source/repos/MeuProjeto" },
+	{ "name": "vault", "path": "C:/Users/automatep/source/repos/Vault" }
+  ],
+  "settings": {
+	"chat.useAgentsMdFile": true,
+	"chat.instructionsFilesLocations": {
+	  "C:/Users/automatep/source/repos/Vault/.github/instructions": true
+	},
+	"chat.promptFilesLocations": {
+	  "C:/Users/automatep/source/repos/Vault/.github/prompts": true
+	},
+	"chat.hookFilesLocations": {
+	  "C:/Users/automatep/source/repos/Vault/.github/hooks": true
+	}
+  }
+}

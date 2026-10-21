@@ -1,0 +1,5 @@
+.vs/
+*.user
+.github/hooks/audit.log
+*.code-workspace
+!projeto.code-workspace.exemplo

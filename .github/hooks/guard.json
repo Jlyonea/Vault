@@ -1,0 +1,10 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "type": "command",
+        "command": "powershell -NoProfile -ExecutionPolicy Bypass -File \"C:/Users/automatep/source/repos/Vault/.github/hooks/guard.ps1\""
+      }
+    ]
+  }
+}
