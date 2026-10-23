@@ -15,6 +15,7 @@ try {
 	$links = [ordered]@{
 		(Join-Path $copilotDir 'vault')        = $PSScriptRoot
 		(Join-Path $copilotDir 'skills\vault') = Join-Path $PSScriptRoot 'skills\vault'
+		(Join-Path $copilotDir 'skills\comandos-longos') = Join-Path $PSScriptRoot 'skills\comandos-longos'
 		(Join-Path $copilotDir 'hooks')        = Join-Path $PSScriptRoot '.github\hooks'
 	}
 	foreach ($link in $links.Keys) {

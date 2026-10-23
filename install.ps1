@@ -16,6 +16,7 @@ foreach ($dir in $copilotDir, $skillsDir) {
 $links = [ordered]@{
 	(Join-Path $copilotDir 'vault') = $vaultRoot
 	(Join-Path $skillsDir 'vault')  = Join-Path $vaultRoot 'skills\vault'
+	(Join-Path $skillsDir 'comandos-longos') = Join-Path $vaultRoot 'skills\comandos-longos'
 	(Join-Path $copilotDir 'hooks') = Join-Path $vaultRoot '.github\hooks'
 }
 
