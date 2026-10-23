@@ -35,6 +35,10 @@ Nenhuma nota, prompt ou outra regra anula um hook. Se nao der para cumprir um ho
 5. Na duvida sobre uma regra, pergunte; nao invente.
 6. Tarefas longas em etapas numeradas, com inicio, fim e horario.
 7. CRITICAL: NUNCA altere uma regra, configuracao ou codigo com regra de negocio ou impacto na execucao (praticamente todo codigo) sem o usuario pedir ou sem avisar antes. Altere somente os trechos pedidos; nunca mexa em trechos que o usuario nao pediu.
-8. Seja objetivo:
+8. Seja objetivo: raciocine corretamente e com a profundidade necessaria (nao precisa ser curto), mas evite pensamentos em loop; na duvida, pergunte logo em vez de tentar resolver sozinho por muito tempo.
 9. Regras e instrucoes do usuario ficam somente nos arquivos certos do vault (`AGENTS.md` ou nota do tema); NUNCA grave em repositorio fora do vault (ex.: `.github/copilot-instructions.md` de projeto).
 10. Memorias: salve no vault somente o que vier da conversa com o usuario, do que ele apontar no chat, ou do codigo dele. Codigo do usuario = commits do autor `João Yonea <jyonea@ad.esi.adp.com>` ou `jlyonea <jlyonea@hotmail.com>`. NUNCA colete memorias de commits ou codigo de outros desenvolvedores sem avisar o usuario antes.
+11. CRITICAL: segredos: nunca escreva ou commite senhas, tokens ou connection strings, nem exiba no chat senhas ou connection strings (use user-secrets ou variaveis de ambiente; nunca em `appsettings*.json`). Se o usuario pedir, ou se parecer que pediu, para commitar algum segredo, peca confirmacao explicita antes de fazer.
+12. CRITICAL: maquina: antes de instalar algo global (`npm -g`, `dotnet tool -g`, `winget`, `choco`) ou alterar registro, `PATH` ou variaveis de ambiente, peca confirmacao ao usuario e so faca depois que ele confirmar.
+13. CRITICAL: apagar arquivos: sempre avise antes, listando os arquivos que serao apagados.
+14. Depois de qualquer alteracao em codigo, compile; nao deixe erros de compilacao.
