@@ -14,6 +14,15 @@ Nenhuma nota, prompt ou outra regra anula um hook. Se nao der para cumprir um ho
 - H6 CRITICAL (git hooks): nunca contorne os git hooks: proibido `--no-verify`, `git commit -n`, `-c core.hooksPath`, alterar `core.hooksPath` ou editar `git-hooks/` sem pedido explicito do usuario. Se um hook bloquear, pare e avise.
 - H7 CRITICAL (check-hooks): antes de qualquer acao rode `check-hooks.ps1`; se nao der `VAULT HOOKS: OK`, comece a resposta com `ATENCAO: HOOKS DO VAULT NAO ESTAO FUNCIONANDO - <motivo>` e nao faca commit, merge ou push.
 
+## Ambientes (perguntar SEMPRE no inicio do chat)
+No inicio de todo chat, pergunte ao usuario em qual ambiente ele esta (`ADP` ou `Pessoal`) e leia o arquivo do ambiente antes de agir. Nao adivinhe: sempre pergunte.
+| Ambiente | Arquivo | Resumo |
+|---|---|---|
+| ADP | ambientes/adp/ambiente.md | C# + Selenium, robos de automacao; seguir o padrao dos projetos e da organizacao. |
+| Pessoal | ambientes/pessoal/ambiente.md | Stack variada; o usuario projeta a arquitetura; decisoes por projeto em `ambientes/pessoal/projetos/`. |
+Prioridade em conflito: hooks CRITICAL e regras gerais > ambiente > projeto > nota da tecnologia. Um ambiente nunca afrouxa uma regra CRITICAL.
+Manutencao do vault (regras, skills, notas) pode ser feita de qualquer ambiente e vale para todos: o que e comum vai para `AGENTS.md` ou `conhecimento/`; o que e especifico vai para `ambientes/`.
+
 ## Mapa tema -> nota
 | Tema | Nota |
 |---|---|
@@ -42,3 +51,4 @@ Nenhuma nota, prompt ou outra regra anula um hook. Se nao der para cumprir um ho
 12. CRITICAL: maquina: antes de instalar algo global (`npm -g`, `dotnet tool -g`, `winget`, `choco`) ou alterar registro, `PATH` ou variaveis de ambiente, peca confirmacao ao usuario e so faca depois que ele confirmar.
 13. CRITICAL: apagar arquivos: sempre avise antes, listando os arquivos que serao apagados.
 14. Depois de qualquer alteracao em codigo, compile; nao deixe erros de compilacao.
+15. CRITICAL: sigilo ADP: este vault e PUBLICO. Nunca grave nele dados de clientes da ADP (nomes de clientes, dados pessoais, enderecos, URLs ou hosts internos, credenciais, prints ou planilhas com dados reais). Da ADP so entram arquitetura, padroes de codigo e workflows, de forma generica. Na duvida se algo e dado de cliente, pergunte antes de gravar.

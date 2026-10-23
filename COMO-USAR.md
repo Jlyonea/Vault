@@ -134,3 +134,11 @@ Teste no chat do VS Code (modo Agent):
 Confira o Output > "GitHub Copilot Chat" e as settings da secao 6, passo 4.
 
 Observacao: o guard tambem bloqueia edicoes de arquivo cujo conteudo contenha esses termos (ex.: editar `git.md` com "git push"). Se incomodar, restrinja o guard ao nome da ferramenta de terminal descoberto no `audit.log`.
+
+## 10. Ambientes (ADP e Pessoal)
+No inicio de todo chat a IA pergunta o ambiente (`ADP` ou `Pessoal`), le o arquivo dele e confirma com `AMBIENTE: ADP` ou `AMBIENTE: PESSOAL - <projeto>`.
+- ADP: `ambientes/adp/ambiente.md` (C# + Selenium, seguir o padrao dos projetos). Preencha a secao "Padrao dos robos ADP" de forma generica.
+- Pessoal: `ambientes/pessoal/ambiente.md`. Para cada projeto, copie `ambientes/pessoal/projetos/_modelo.md` para `ambientes/pessoal/projetos/<projeto>.md` e registre stack, arquitetura, testes e decisoes.
+- Prioridade: hooks CRITICAL e regras gerais > ambiente > projeto > nota da tecnologia.
+- O vault e publico: nunca grave dados de clientes da ADP (regra geral 15 do `AGENTS.md`).
+- Regras, skills e notas do vault podem ser mantidas de qualquer ambiente e valem para todos os projetos.

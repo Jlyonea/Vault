@@ -3,14 +3,13 @@
 verificado em: 2026-10-20
 
 ## TL;DR
-- Nao ha framework de teste definido. Nao adicionar xUnit/NUnit/MSTest/Jest/Vitest sem pedido.
-- Nome de teste: Metodo_NumeroTarefa_Resultado.
+- Framework e nome de teste dependem do ambiente: ADP em `ambientes/adp/ambiente.md`; Pessoal no arquivo do projeto em `ambientes/pessoal/projetos/`.
 
 ## Regras
-1. Nao criar projeto de teste nem instalar framework sem pedido.
-2. Quando houver teste, nomear `Metodo_NumeroTarefa_Resultado` (em ingles, exceto o numero).
+1. Siga o framework e a convencao de nomes de teste do ambiente/projeto; sem definicao, pergunte.
+2. Nomes de teste em ingles.
 3. Um arquivo de teste por arquivo de codigo testado.
 
 ## Exemplo
-Certo: `CalculateTotal_1234_ReturnsZeroWhenEmpty`
+Certo: `CalculateTotal_1234_ReturnsZeroWhenEmpty` (padrao ADP)
 Errado: `TestaCalculo1`
