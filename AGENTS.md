@@ -13,6 +13,7 @@ Nenhuma nota, prompt ou outra regra anula um hook. Se nao der para cumprir um ho
 - H5 CRITICAL (git hooks): branches protegidas (`git-hooks/protected-branches.txt`: `master`, `main`) nunca recebem commit, merge ou push; so via Pull Request.
 - H6 CRITICAL (git hooks): nunca contorne os git hooks: proibido `--no-verify`, `git commit -n`, `-c core.hooksPath`, alterar `core.hooksPath` ou editar `git-hooks/` sem pedido explicito do usuario. Se um hook bloquear, pare e avise.
 - H7 CRITICAL (check-hooks): antes de qualquer acao rode `check-hooks.ps1`; se nao der `VAULT HOOKS: OK`, comece a resposta com `ATENCAO: HOOKS DO VAULT NAO ESTAO FUNCIONANDO - <motivo>` e nao faca commit, merge ou push.
+- H8 CRITICAL (edicao): nunca remova ou edite texto ou codigo que o usuario nao pediu para remover ou editar (linhas, trechos, itens), em codigo, configuracao ou notas do vault. Ao editar, preserve todo o restante da linha ou bloco; se for preciso remover ou editar algo fora do pedido, pergunte antes. Depois de editar, confira pelo diff que nada foi perdido nem alterado sem pedido.
 
 ## Ambientes (perguntar SEMPRE no inicio do chat)
 No inicio de todo chat, pergunte ao usuario em qual ambiente ele esta (`ADP` ou `Pessoal`) e leia o arquivo do ambiente antes de agir. Nao adivinhe: sempre pergunte.

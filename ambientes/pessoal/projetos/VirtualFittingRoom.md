@@ -23,7 +23,7 @@ verificado em: 2026-10-23
 - Padrao: React (SPA) consumindo uma Web API propria em C# (projeto separado), que acessa o SQL Server do usuario (produtos, login etc.).
 - Granularidade da API: monolito (modular). Microservicos so no futuro, se necessario.
 - Ordem de construcao: primeiro o front-end com dados mock; depois a API.
-- Autenticacao: propria (ASP.NET Core Identity) + JWT.
+- Autenticacao: propria (ASP.NET Core Identity) + JWT + refresh token; papeis `Customer` e `Admin`.
 - Estrutura de pastas (aprovada):
 ```
 VirtualFittingRoom/
@@ -37,9 +37,32 @@ VirtualFittingRoom/
     VirtualFittingRoom.Application.Tests/
     VirtualFittingRoom.Domain.Tests/
 ```
-- DTOs e classes de modelo ficam separados em uma pasta `Models` (local exato a confirmar quando a API for construida).
+- DTOs e classes de modelo ficam separados em uma pasta `Models`: na API, em `Application/<Contexto>/Models`.
+## API v1 (definicoes de 2026-10-26)
+- Uma loja por sistema (sem multi-tenant).
+- Funcoes: login; catalogo publico (GET sem login, com paginacao e filtros por categoria, tamanho, cor e nome; sem preco na v1); CRUD de produtos (criar/alterar/excluir so `Admin`); envio de imagens; avatar salvo por usuario; combinacoes de produtos salvas por usuario; calculo de caimento (endpoint no Domain).
+- Produto: Id `Guid`; tabela de produtos + tabela filha de tamanhos (cada tamanho com suas medidas) + FK para tabela de categorias (por ora: camisetas e calcas).
+- Categorias: cada categoria e independente, com medidas e molde 3D proprios (bermuda, blusa etc. no futuro serao categorias novas). Medidas por categoria: colunas anulaveis na tabela de tamanhos (ex.: `ChestCm`, `WaistCm`, `HipCm`, `LengthCm`); medida nova exige migration.
+- Imagens: tratamento sincrono no envio; arquivo no disco do servidor (banco guarda so o caminho); landmarks em arquivo `.landmarks.json` ao lado da imagem. Deteccao de landmarks hoje so existe para camiseta.
+- Repositorio: a API fica em um repositorio novo (criado pelo usuario); o tratamento de imagem atual (`VirtualFittingRoom.Application` deste repo) sera movido para a Application da API.
+- Organizacao: pastas por contexto (ex.: Auth, Products, Avatars, Outfits) em cada camada; fluxo Controller -> Service -> Repository -> DbContext.
+- DTOs mapeados a mao; validacao com FluentValidation.
+- Endpoints com Controllers; rotas versionadas (`/api/v1`); Swagger UI; erros em `ProblemDetails`; JSON polimorfico de produto com discriminador `category`.
+- Testes: controle completo (cobrir todas as camadas).
+- Testes de integracao com SQL Server LocalDB (mesmo motor da producao; exige estrategia de isolamento entre testes).
+- Caimento (folga = medida da peca - medida do corpo, em circunferencia; se a loja informar a peca medida na horizontal, de um lado a outro, multiplicar por 2):
+  - Camiseta peito: apertado < 4 cm; ideal 4 a 12 cm; folgado > 12 cm.
+  - Camiseta cintura: apertado < 4 cm; ideal 4 a 14 cm; folgado > 14 cm.
+  - Calca cintura: apertado < 0 cm; ideal 0 a 4 cm; folgado > 4 cm.
+  - Calca quadril: apertado < 2 cm; ideal 2 a 8 cm; folgado > 8 cm.
+  - Resultado geral: se alguma medida for apertado, o resultado e apertado; senao, se alguma for folgado, e folgado; senao, e ideal. A resposta traz tambem o resultado de cada medida.
+  - Comprimento so informativo na v1 (o avatar nao tem medida de tronco nem de entrepernas).
+- Compilacao e testes na maquina pessoal do usuario; nesta maquina o codigo e escrito sem compilar.
+## Pendencias futuras
+- Seguranca do login: melhorar armazenamento/rotacao do token (ex.: refresh token em cookie `httpOnly`, rotacao e revogacao).
+- Servicos de e-mail (confirmacao de conta, recuperacao de senha).
 ## Boas praticas
-1. Foco em componentes reutilizaveis: NUNCA repetir codigo.
+1. Foco em componentes reutilizaveis: NUNCA repetir codigo a nao ser que seja estritamente necessario.
 2. Cada metodo tem uma unica responsabilidade (SRP / SOLID).
 ## Testes
 - Testes isolados de cada parte do codigo (unitarios).
@@ -112,3 +135,9 @@ Com esse padrao, o sistema detecta o contorno da peca (gola, ombros, barra, mang
 | 2026-10-26 | Pipeline sem IA: remove fundo (flood fill pela borda) -> maior componente -> recorte -> landmarks da camiseta (gola, pescoco, mangas, axilas, barra) normalizados; saida PNG + `.landmarks.json` | Execucao do pedido |
 | 2026-10-26 | Codec de imagem com SkiaSharp 3.119.0 (MIT); testes em `tests/VirtualFittingRoom.Application.Tests`; ferramenta `tools/VirtualFittingRoom.ImageProcessor` le `SampleImages` e grava em `ProcessedImages` | Execucao do pedido |
 | 2026-10-26 | Codigo C# escrito sem compilar (NuGet bloqueado por TLS nesta maquina); imagens de teste serao baixadas manualmente pelo usuario; sem commit | Restricao do usuario |
+| 2026-10-26 | Escopo da API v1, papeis Customer/Admin, uma loja por sistema, refresh token, Id Guid, categorias em tabela, tratamento de imagem sincrono, pastas por contexto, Service -> Repository -> DbContext, DTOs a mao, Controllers, `/api/v1`, Swagger UI, ProblemDetails, paginacao/filtros, caimento na v1 (ver secao "API v1") | Definido pelo usuario |
+| 2026-10-26 | Validacao com FluentValidation (em vez de DataAnnotations) | Delegado pelo usuario a IA |
+| 2026-10-26 | Lembretes futuros: melhorar seguranca do token; servicos de e-mail (secao "Pendencias futuras") | Definido pelo usuario |
+| 2026-10-26 | API: medidas em colunas anulaveis na tabela de tamanhos; DTOs em `Application/<Contexto>/Models`; filtros do catalogo: categoria, tamanho, cor e nome (sem preco) | Definido pelo usuario |
+| 2026-10-26 | Produto + tabela filha de tamanhos; categorias independentes (medidas e molde proprios); imagens no disco com caminho no banco; landmarks em `.landmarks.json`; API em repositorio novo, recebendo o tratamento de imagem deste repo (substitui "API na mesma solucao") | Definido pelo usuario |
+| 2026-10-26 | Testes de integracao com SQL Server LocalDB; folgas do caimento aprovadas (secao "API v1") | Definido pelo usuario |

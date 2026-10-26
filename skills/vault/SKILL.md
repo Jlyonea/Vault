@@ -9,7 +9,7 @@ Estas regras valem para qualquer repositorio ou projeto, mesmo sem `.github/copi
 Vault: pasta `Vault` em `source\repos` (padrao do Visual Studio), ao lado do repositorio aberto: `../Vault/` a partir da solucao. Se a solucao estiver em subpasta, use `C:/Users/<usuario>/source/repos/Vault/` (usuario do caminho do workspace).
 
 0. Antes de qualquer acao, rode `../Vault/check-hooks.ps1`. Se a saida nao for `VAULT HOOKS: OK` ou se nao conseguir rodar, comece a resposta com `ATENCAO: HOOKS DO VAULT NAO ESTAO FUNCIONANDO - <motivo>` e nao faca commit, merge ou push ate o usuario resolver.
-1. Leia `../Vault/AGENTS.md`, comecando pela secao `CRITICAL: hooks` (H1-H7), antes de QUALQUER alteracao. Sem ler, nao altere nada. Na primeira resposta do chat, escreva `CRITICAL HOOKS: lidos (H1-H7)`; se nao conseguiu ler, escreva `CRITICAL HOOKS: NAO LIDOS - <motivo>` e nao altere nada.
+1. Leia `../Vault/AGENTS.md`, comecando pela secao `CRITICAL: hooks` (H1-H8), antes de QUALQUER alteracao. Sem ler, nao altere nada. Na primeira resposta do chat, escreva `CRITICAL HOOKS: lidos (H1-H8)`; se nao conseguiu ler, escreva `CRITICAL HOOKS: NAO LIDOS - <motivo>` e nao altere nada.
    Depois leia o mapa tema -> nota e as regras gerais.
 2. Pergunte SEMPRE ao usuario, no inicio do chat, em qual ambiente ele esta (`ADP` ou `Pessoal`); nao adivinhe. Leia `../Vault/ambientes/<ambiente>/ambiente.md`. No Pessoal, pergunte o projeto e leia `../Vault/ambientes/pessoal/projetos/<projeto>.md` (se nao existir, ofereca criar a partir de `_modelo.md`). Depois de responder, escreva `AMBIENTE: ADP` ou `AMBIENTE: PESSOAL - <projeto>`.
 3. Leia `../Vault/conhecimento/arquitetura-e-escopo.md` e a nota do tema da tarefa (veja `conhecimento/indice.md`).

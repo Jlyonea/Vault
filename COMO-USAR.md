@@ -19,7 +19,7 @@ Os scripts nao tem caminho fixo de usuario (so o exemplo do VS Code, secao 6).
 Regras: gerais em `AGENTS.md`; por tema em `conhecimento/` (indice em `conhecimento/indice.md`).
 Comandos no VS: peca "salvar nota", "revisar" ou "nova regra" no chat (a skill aponta para os prompts).
 No VS a protecao automatica sao os git hooks (secao 2).
-Os hooks do Copilot (`.github/hooks`) nao rodam no chat do VS (exigiriam uma extensao VSIX). No VS eles valem como regras `CRITICAL` (H1-H7) no topo do `AGENTS.md`, aplicadas pela IA; a skill exige que a primeira resposta do chat mostre `CRITICAL HOOKS: lidos (H1-H7)`.
+Os hooks do Copilot (`.github/hooks`) nao rodam no chat do VS (exigiriam uma extensao VSIX). No VS eles valem como regras `CRITICAL` (H1-H8) no topo do `AGENTS.md`, aplicadas pela IA; a skill exige que a primeira resposta do chat mostre `CRITICAL HOOKS: lidos (H1-H8)`.
 
 ## 2. Guardrails git (funcionam no Visual Studio)
 Valem para qualquer ferramenta que use git nesta maquina: Copilot, terminal, Git Changes do VS.
