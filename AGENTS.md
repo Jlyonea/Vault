@@ -17,6 +17,7 @@ Nenhuma nota, prompt ou outra regra anula um hook. Se nao der para cumprir um ho
 
 ## Ambientes (perguntar SEMPRE no inicio do chat)
 No inicio de todo chat, pergunte ao usuario em qual ambiente ele esta (`ADP` ou `Pessoal`) e leia o arquivo do ambiente antes de agir. Nao adivinhe: sempre pergunte.
+CRITICAL: a pergunta do ambiente e bloqueante. Faca a pergunta de forma interativa (pergunta com opcoes) e ESPERE a resposta antes de qualquer outra acao (responder, pesquisar, editar, rodar comandos). Nunca deduza o ambiente pelo repositorio e nunca siga em frente so repetindo a pergunta em texto.
 | Ambiente | Arquivo | Resumo |
 |---|---|---|
 | ADP | ambientes/adp/ambiente.md | C# + Selenium, robos de automacao; seguir o padrao dos projetos e da organizacao. |
@@ -46,7 +47,7 @@ Manutencao do vault (regras, skills, notas) pode ser feita de qualquer ambiente 
 6. Tarefas longas em etapas numeradas, com inicio, fim e horario.
 7. CRITICAL: NUNCA altere uma regra, configuracao ou codigo com regra de negocio ou impacto na execucao (praticamente todo codigo) sem o usuario pedir ou sem avisar antes. Altere somente os trechos pedidos; nunca mexa em trechos que o usuario nao pediu.
 8. Seja objetivo: raciocine corretamente e com a profundidade necessaria (nao precisa ser curto), mas evite pensamentos em loop; na duvida, pergunte logo em vez de tentar resolver sozinho por muito tempo.
-9. Regras e instrucoes do usuario ficam somente nos arquivos certos do vault (`AGENTS.md` ou nota do tema); NUNCA grave em repositorio fora do vault (ex.: `.github/copilot-instructions.md` de projeto).
+9. Regras e instrucoes do usuario ficam somente nos arquivos certos do vault (`AGENTS.md` ou nota do tema); NUNCA grave em repositorio fora do vault (ex.: `.github/copilot-instructions.md` de projeto), exceto informacoes especificas do repositorio (regra 19).
 10. Memorias: salve no vault somente o que vier da conversa com o usuario, do que ele apontar no chat, ou do codigo dele. Codigo do usuario = commits do autor `João Yonea <jyonea@ad.esi.adp.com>` ou `jlyonea <jlyonea@hotmail.com>`. NUNCA colete memorias de commits ou codigo de outros desenvolvedores sem avisar o usuario antes.
 11. CRITICAL: segredos: nunca escreva ou commite senhas, tokens ou connection strings, nem exiba no chat senhas ou connection strings (use user-secrets ou variaveis de ambiente; nunca em `appsettings*.json`). Se o usuario pedir, ou se parecer que pediu, para commitar algum segredo, peca confirmacao explicita antes de fazer.
 12. CRITICAL: maquina: antes de instalar algo global (`npm -g`, `dotnet tool -g`, `winget`, `choco`) ou alterar registro, `PATH` ou variaveis de ambiente, peca confirmacao ao usuario e so faca depois que ele confirmar.
@@ -56,3 +57,6 @@ Manutencao do vault (regras, skills, notas) pode ser feita de qualquer ambiente 
 16. CRITICAL: identidade git: o e-mail da ADP (`jyonea@ad.esi.adp.com`) so pode ser usado em projetos da ADP/ADPR. Em qualquer outro projeto (pessoal, incluindo este vault), TODOS os commits usam `jlyonea <jlyonea@hotmail.com>`. Antes de todo commit, confira `git config user.name` e `git config user.email`; se estiverem errados, configure com `git config --local` no repositorio (nunca altere o `--global`, regra 12) e avise o usuario.
 17. CRITICAL: confirmar repositorio: se o usuario pedir commit, sync, pull, push ou fetch sem dizer em qual repositorio (ex.: "faca commit e sync"), pergunte qual repositorio e branch e espere a confirmacao antes de executar.
 18. CRITICAL: falhas de git: sempre que um commit, pull, push ou fetch falhar ou nao for concluido (ex.: repositorio sem remoto, push recusado, hook bloqueando), avise o usuario no INICIO da resposta, com destaque, dizendo o que falhou e o motivo; nunca so de passagem.
+19. CRITICAL: memoria do Copilot (recurso "salvar instrucao", que grava no `.github/copilot-instructions.md` do repositorio aberto): use SOMENTE para informacoes especificas daquele repositorio (ex.: estrutura, metodos, padroes do projeto). Regras gerais do usuario (comportamento do agente, ambientes, hooks, estilo valido para todos os projetos) NUNCA vao para a memoria; grave direto no vault (`AGENTS.md` ou nota do tema).
+   Certo: "Em `ColumnValidationHelpers` os metodos de data sao X, Y, Z" -> memoria do repositorio.
+   Errado: "Sempre perguntar o ambiente no inicio do chat" -> memoria do repositorio (deveria ir para o `AGENTS.md`).

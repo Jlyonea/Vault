@@ -4,6 +4,7 @@ verificado em: 2026-10-23
 - Objetivo: aplicacao web publica de provador virtual para uma loja de roupas (ex.: camisetas X, Y, Z e calcas A, B, C). O usuario configura um avatar com as medidas do proprio corpo, combina produtos (cada produto tem suas medidas) e visualiza o resultado sem experimentar fisicamente.
 - Repositorio: pasta `source/repos/VirtualFittingRoom`; remoto `https://github.com/Jlyonea/VirtualFittingRoom.git`.
 - Prioridades: usabilidade, manutenibilidade para o desenvolvedor e velocidade de navegacao (publico aberto).
+- Setup local (tudo o que instalar para rodar): `ambientes/pessoal/projetos/VirtualFittingRoom-setup.md`. CRITICAL: sempre que uma dependencia, ferramenta ou passo for adicionado ou removido (front, back-end, API, ferramentas), atualizar esse documento no mesmo chat.
 ## Stack
 - Front-end: React + TypeScript (SPA).
 - Dados mock: camada de servicos (ex.: `productService.getAll()`) lendo JSON local; ao criar a API, troca-se apenas a implementacao dos servicos.
@@ -154,3 +155,4 @@ Com esse padrao, o sistema detecta o contorno da peca (gola, ombros, barra, mang
 | 2026-10-26 | FK entre contextos via referencia minima so de leitura (ex.: `ProductReference` interna no Outfits com so os campos necessarios, mapeada na mesma tabela com `ExcludeFromMigrations`); sem referencia de projeto entre contextos | Definido pelo usuario |
 | 2026-10-26 | Correcao: com DbContext unico a referencia so de leitura nao funciona (EF nao aceita 2 entidades na mesma tabela sem relacao 1:1); FK entre contextos pela opcao A: `HasOne("<namespace>.<Entidade>", null)` com o nome da entidade em texto, sem referencia de projeto entre contextos | Definido pelo usuario |
 | 2026-10-26 | Identity: classe `User : IdentityUser<Guid>` em `Common/Shared/Identity`; `VirtualFittingRoomDbContext` herda `IdentityDbContext<User, IdentityRole<Guid>, Guid>`; pacote Identity.EntityFrameworkCore movido do Auth para o Common; Auth fica com controllers, services e JWT/refresh token | Definido pelo usuario |
+| 2026-10-29 | Documento de setup local criado em `ambientes/pessoal/projetos/VirtualFittingRoom-setup.md` (ferramentas, pacotes e comandos); deve ser atualizado a cada dependencia adicionada ou removida | Pedido do usuario |
