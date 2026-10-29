@@ -6,6 +6,65 @@ verificado em: 2026-10-29
 - MANTER ATUALIZADO: toda dependencia, ferramenta ou passo adicionado ou removido no projeto (front, back-end, API, ferramentas) deve ser refletido aqui no mesmo chat da alteracao, com registro no historico no fim do arquivo.
 - Escopo atual: repositorios `VirtualFittingRoom` (branch `feature/initial-setup`) e `VirtualFittingRoomAPI` (branch `feature/initial-setup`).
 - Comandos em PowerShell, no Windows.
+- O bloco unico da secao 0 deve ser atualizado junto com as demais secoes.
+
+## 0. Todos os comandos em ordem (bloco unico)
+Rodar em um PowerShell como administrador. Antes, trocar o valor de `$connectionString` pela connection string do LocalDB (nao versionar o valor real). Os detalhes de cada passo estao nas secoes 1 a 6.
+
+```powershell
+# 0. Variables
+$repos = "$env:USERPROFILE\source\repos"
+$connectionString = '<your-localdb-connection-string>'
+
+# 1. Machine tools (global install)
+winget install --id Git.Git -e
+winget install --id Microsoft.DotNet.SDK.10 -e
+winget install --id OpenJS.NodeJS.LTS -e
+winget install --id BlenderFoundation.Blender -e
+# MakeHuman: no winget package confirmed; download it from makehumancommunity.org
+# SQL Server LocalDB: installed with Visual Studio (ASP.NET workload) or SQL Server Express (LocalDB option)
+
+# Reload PATH in this session (avoids reopening the terminal)
+$env:Path = [Environment]::GetEnvironmentVariable('Path', 'Machine') + ';' + [Environment]::GetEnvironmentVariable('Path', 'User')
+
+# Check versions
+git --version; dotnet --version; node -v; npm -v; sqllocaldb info
+
+# 2. Clone repositories (skipped if they already exist)
+Set-Location $repos
+if (-not (Test-Path "$repos\VirtualFittingRoom")) { git clone -b feature/initial-setup https://github.com/Jlyonea/VirtualFittingRoom.git }
+if (-not (Test-Path "$repos\VirtualFittingRoomAPI")) { git clone -b feature/initial-setup https://github.com/Jlyonea/VirtualFittingRoomAPI.git }
+
+# 3. VirtualFittingRoom: image processing (C#)
+Set-Location "$repos\VirtualFittingRoom"
+dotnet restore VirtualFittingRoom.slnx
+dotnet build VirtualFittingRoom.slnx
+dotnet test tests/VirtualFittingRoom.Application.Tests
+# Put the test images in tools/VirtualFittingRoom.ImageProcessor/SampleImages before running the line below
+dotnet run --project tools/VirtualFittingRoom.ImageProcessor
+
+# 4. VirtualFittingRoom: React front-end
+Set-Location "$repos\VirtualFittingRoom\src\virtual-fitting-room-web"
+npm install
+npm test
+npm run build
+
+# 5. VirtualFittingRoomAPI
+Set-Location "$repos\VirtualFittingRoomAPI"
+sqllocaldb start MSSQLLocalDB
+dotnet restore VirtualFittingRoomAPI.slnx
+dotnet build VirtualFittingRoomAPI.slnx
+dotnet user-secrets set "ConnectionStrings:VirtualFittingRoom" $connectionString --project src/VirtualFittingRoomAPI.Host
+dotnet test tests/VirtualFittingRoomAPI.Tests
+# Only when the API has migrations:
+# dotnet tool install --global dotnet-ef
+# dotnet ef database update --project src/VirtualFittingRoomAPI.Common --startup-project src/VirtualFittingRoomAPI.Host
+
+# 6. Run: API in a new window, front-end in this one
+Start-Process powershell -WorkingDirectory "$repos\VirtualFittingRoomAPI" -ArgumentList '-NoExit', '-Command', 'dotnet run --project src/VirtualFittingRoomAPI.Host'
+Set-Location "$repos\VirtualFittingRoom\src\virtual-fitting-room-web"
+npm run dev
+```
 
 ## 1. Ferramentas da maquina (instalacao global)
 Instalar como administrador. Depois, fechar e abrir o terminal.
@@ -102,3 +161,4 @@ Observacoes:
 | Data | Alteracao |
 |---|---|
 | 2026-10-29 | Documento criado: ferramentas, pacotes e comandos do front React, tratamento de imagens C#, API e manequim 3D |
+| 2026-10-29 | Secao 0: bloco unico com todos os comandos PowerShell em ordem (instalar, clonar, compilar, testar e rodar) |
